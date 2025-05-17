@@ -184,7 +184,6 @@ const MenuLeft = () => {
             <input
               type="text"
               className="span2"
-              value=""
               data-slider-min="0"
               data-slider-max="600"
               data-slider-step="5"

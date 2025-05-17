@@ -8,8 +8,8 @@ const DefaultLayout = () => {
     <>
       <Header />
       <section>
-        <div class="container">
-          <div class="row">
+        <div className="container">
+          <div className="row">
             <MenuLeft />
             <Outlet />
           </div>
