@@ -8,7 +8,7 @@ const useFetchBlogById = (id) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getById(API.BLOG_ENDPOINT, "detail", id);
+        const result = await getById(API.BLOGDETAIL_ENDPOINT, id);
         setData(result.data);
       } catch (error) {
         console.error("Lỗi khi fetch blog:", error.message);

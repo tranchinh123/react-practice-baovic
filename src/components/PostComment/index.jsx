@@ -2,7 +2,7 @@ import { useState } from "react";
 import { post } from "../../service/api";
 import { API } from "../../constants/api";
 
-const PostComment = ({ idBlog, onNewComment }) => {
+const PostComment = ({ idBlog, onNewComment, replyTo }) => {
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
 
@@ -31,7 +31,7 @@ const PostComment = ({ idBlog, onNewComment }) => {
       const formData = new FormData();
       formData.append("id_blog", idBlog);
       formData.append("id_user", auth.id);
-      formData.append("id_comment", 0);
+      formData.append("id_comment", replyTo || 0);
       formData.append("comment", comment);
       formData.append("image_user", auth.avatar);
       formData.append("name_user", auth.name);
@@ -44,6 +44,7 @@ const PostComment = ({ idBlog, onNewComment }) => {
         );
 
         const newComment = {
+          id_comment: replyTo || 0,
           comment,
           image_user: auth.avatar,
           name_user: auth.name,
@@ -66,7 +67,7 @@ const PostComment = ({ idBlog, onNewComment }) => {
     <div className="replay-box">
       <div className="row">
         <div className="col-sm-12">
-          <h2>Leave a replay</h2>
+          <h2>Leave a {replyTo ? `reply @${auth.name}` : "comment"}</h2>
 
           <div className="text-area">
             <div className="blank-arrow">

@@ -29,11 +29,9 @@ const get = async (endPoint) => {
   }
 };
 
-const getById = async (endPoint, subPath, id) => {
+const getById = async (endPoint, id) => {
   try {
-    const response = await axios.get(
-      `${API.BASE_URL}${endPoint}/${subPath}/${id}`
-    );
+    const response = await axios.get(`${API.BASE_URL}${endPoint}/${id}`);
     return response.data;
   } catch (error) {
     // Nếu có response từ server (ví dụ lỗi 4xx, 5xx)

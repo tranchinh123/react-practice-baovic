@@ -36,7 +36,7 @@ const BlogPage = () => {
             </div>
             <Link to={`/blog/detail/${blog.id}`}>
               <img
-                src={`http://project.test/laravel8/laravel8/public/upload/blog/image/${blog.image}`}
+                src={`http://localhost:8080/web/laravel8/public/upload/blog/image/${blog.image}`}
                 alt={blog.title}
               />
             </Link>
