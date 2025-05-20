@@ -1,15 +1,48 @@
 import { useParams } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+
 import useFetchBlogById from "../../hooks/useFetchBlogByID";
 
 import Rating from "../../components/Rating";
 import Comments from "../../components/Comments";
-import PostComment from "../../components/PostCommet";
+import PostComment from "../../components/PostComment";
+
+import { get } from "../../service/api";
+import { API } from "../../constants/api";
 
 import imageSocial from "../../assets/images/blog/socials.png";
 
 const BlogPageDetail = () => {
   const { id } = useParams();
   const { data, error } = useFetchBlogById(id);
+  const [comments, setComments] = useState([]);
+  const commentFormRef = useRef();
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await get(`${API.BLOGDETAIL_ENDPOINT}/${id}`);
+        setComments(response.data.comment);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchComments();
+  }, [id]);
+
+  const handleReplyButton = (idComment) => {
+    console.log("Click Comment", idComment);
+    if (commentFormRef) {
+      if (commentFormRef.current) {
+        commentFormRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  const handleNewComment = (newComment) => {
+    setComments((prev) => [...prev, newComment]);
+  };
 
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   return (
@@ -33,7 +66,7 @@ const BlogPageDetail = () => {
           </div>
           <a href=".">
             <img
-              src={`http://localhost:8080/web/laravel8/public/upload/blog/image/${data.image}`}
+              src={`http://project.test/laravel8/laravel8/public/upload/blog/image/${data.image}`}
               alt=""
             />
           </a>
@@ -52,7 +85,6 @@ const BlogPageDetail = () => {
           </div>
         </div>
       </div>
-
       <Rating />
 
       <div className="socials-share">
@@ -61,8 +93,11 @@ const BlogPageDetail = () => {
         </a>
       </div>
 
-      <Comments idBlog={id} />
-      <PostComment idBlog={id} />
+      <Comments comments={comments} onReply={handleReplyButton} />
+
+      <div ref={commentFormRef}>
+        <PostComment idBlog={id} onNewComment={handleNewComment} />
+      </div>
     </div>
   );
 };

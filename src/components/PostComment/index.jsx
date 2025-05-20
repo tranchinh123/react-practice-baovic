@@ -2,7 +2,7 @@ import { useState } from "react";
 import { post } from "../../service/api";
 import { API } from "../../constants/api";
 
-const PostComment = ({ idBlog }) => {
+const PostComment = ({ idBlog, onNewComment }) => {
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
 
@@ -42,7 +42,17 @@ const PostComment = ({ idBlog }) => {
           formData,
           config
         );
-        console.log("Post Comment Success");
+
+        const newComment = {
+          comment,
+          image_user: auth.avatar,
+          name_user: auth.name,
+        };
+
+        if (onNewComment) {
+          onNewComment(newComment);
+        }
+
         setError("");
         setComment("");
       } catch (err) {
