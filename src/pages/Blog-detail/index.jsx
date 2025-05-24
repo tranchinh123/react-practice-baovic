@@ -87,7 +87,7 @@ const BlogPageDetail = () => {
           </div>
         </div>
       </div>
-      <StarRating />
+      <StarRating idBlog={id} />
 
       <div className="socials-share">
         <a href=".">
