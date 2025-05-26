@@ -10,10 +10,17 @@ const Comments = ({ comments, onReply }) => {
       <ul className="media-list">
         {parentComments.map((parent) => (
           <li key={parent.id} className="media">
-            <a className="pull-left" href=".">
+            {/* <a className="pull-left" href=".">
               <img
                 className="media-object"
                 src={`http://localhost:8080/web/laravel8/public/upload/user/avatar/${parent.image_user}`}
+                alt="avatar"
+              />
+            </a> */}
+            <a className="pull-left" href=".">
+              <img
+                className="media-object"
+                src={`http://project.test/laravel8/laravel8/public/upload/user/avatar/${parent.image_user}`}
                 alt="avatar"
               />
             </a>
@@ -42,10 +49,18 @@ const Comments = ({ comments, onReply }) => {
               <ul className="media-list" style={{ marginLeft: "40px" }}>
                 {getChildComments(parent.id).map((child) => (
                   <li key={child.id} className="media second-media">
-                    <a className="pull-left" href=".">
+                    {/* <a className="pull-left" href=".">
                       <img
                         className="media-object"
                         src={`http://localhost:8080/web/laravel8/public/upload/user/avatar/${child.image_user}`}
+                        alt="avatar"
+                      />
+                    </a> */}
+
+                    <a className="pull-left" href=".">
+                      <img
+                        className="media-object"
+                        src={`http://project.test/laravel8/laravel8/public/upload/user/avatar/${child.image_user}`}
                         alt="avatar"
                       />
                     </a>

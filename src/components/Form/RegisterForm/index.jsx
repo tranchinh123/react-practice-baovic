@@ -1,181 +1,145 @@
+import { useForm } from "react-hook-form";
 import { post } from "../../../service/api";
-import useForm from "../../../hooks/useForm";
 
 const RegisterForm = () => {
-  const initialValues = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPass: "",
-    phone: "",
-    address: "",
-    avatar: null,
-    level: 0,
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const validateAvatar = (fileList) => {
+    if (!fileList || fileList.length === 0) {
+      return "Vui lòng chọn ảnh đại diện";
+    }
+
+    const file = fileList[0];
+
+    const validTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    if (!validTypes.includes(file.type)) {
+      return "File không đúng định dạng hình ảnh";
+    }
+
+    if (file.size > 1024 * 1024) {
+      return "Dung lượng ảnh phải <= 1MB";
+    }
+
+    return true;
   };
 
-  const validate = (form) => {
-    const errors = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (err) => reject(err);
+    });
 
-    if (!form.email) {
-      errors.email = "Vui lòng nhập email";
-    } else if (!emailRegex.test(form.email)) {
-      errors.email = "Email không hợp lệ";
-    }
-
-    if (!form.name) {
-      errors.name = "Vui lòng nhập tên";
-    }
-
-    if (!form.phone) {
-      errors.phone = "Vui lòng nhập số điện thoại";
-    }
-    if (!form.address) {
-      errors.address = "Vui lòng nhập địa chỉ";
-    }
-
-    if (!form.password) {
-      errors.password = "Vui lòng nhập mật khẩu";
-    }
-
-    if (!form.confirmPass) {
-      errors.confirmPass = "Vui lòng xác nhận mật khẩu";
-    } else if (form.confirmPass !== form.password) {
-      errors.confirmPass = "Mật khẩu xác nhận không khớp";
-    }
-
-    if (!form.avatar) {
-      errors.avatar = "Vui lòng chọn ảnh đại diện";
-    } else {
-      const { name, size, type } = form.avatar;
-
-      const allowedTypes = ["jpg", "jpeg", "png", "gif", "webp"];
-      const ext = name.split(".").pop().toLowerCase();
-
-      if (!type.startsWith("image/") || !allowedTypes.includes(ext)) {
-        errors.avatar =
-          "File không đúng định dạng hình ảnh (chỉ chấp nhận JPG, PNG, GIF, WEBP)";
-      } else if (size > 1024 * 1024) {
-        errors.avatar = "File quá lớn. Chỉ chấp nhận <= 1MB";
-      }
-    }
-
-    return errors;
-  };
-
-  const onSubmit = async (form) => {
-    const toBase64 = (file) =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result); // chuỗi base64
-        reader.onerror = (error) => reject(error);
-      });
-
+  const onSubmit = async (data) => {
     try {
-      const base64Avatar = await toBase64(form.avatar);
+      const file = data.avatar[0];
+      const base64Avatar = await toBase64(file);
 
       const userData = {
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        address: form.address,
-        password: form.password,
-        level: form.level,
-        avatar: base64Avatar, // ảnh base64
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        confirmPass: data.confirmPass,
+        phone: data.phone,
+        address: data.address,
+        level: 0,
+        avatar: base64Avatar,
       };
 
       await post("register", userData);
-      resetForm();
-      console.log("Tạo tài khoản thành công!");
+      reset();
+      alert("Tạo tài khoản thành công!");
     } catch (error) {
       console.error("Lỗi khi tạo tài khoản:", error);
+      alert("Đăng ký thất bại!");
     }
   };
 
-  const { errors, form, handleSubmit, handleInput, handleFile, resetForm } =
-    useForm(initialValues, validate, onSubmit);
-
   return (
-    <div className="register_form">
+    <form onSubmit={handleSubmit(onSubmit)} className="register_form">
       <h2>Register</h2>
+
       <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={form.name}
-              onChange={handleInput}
-            />
-            {<p style={{ color: "red" }}>{errors.name}</p>}
-          </div>
-
-          <div>
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={handleInput}
-            />
-            {<p style={{ color: "red" }}>{errors.email}</p>}
-          </div>
-
-          <div>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleInput}
-            />
-            {<p style={{ color: "red" }}>{errors.pass}</p>}
-          </div>
-
-          <div>
-            <input
-              type="password"
-              name="confirmPass"
-              placeholder="Confirm password"
-              value={form.confirmPass}
-              onChange={handleInput}
-            />
-            {<p style={{ color: "red" }}>{errors.confirmPass}</p>}
-          </div>
-
-          <div>
-            <input
-              type="number"
-              name="phone"
-              placeholder="Phone"
-              value={form.phone}
-              onChange={handleInput}
-            />
-            {<p style={{ color: "red" }}>{errors.phone}</p>}
-          </div>
-
-          <div>
-            <input
-              type="text"
-              name="address"
-              placeholder="address"
-              value={form.address}
-              onChange={handleInput}
-            />
-            {<p style={{ color: "red" }}>{errors.address}</p>}
-          </div>
-
-          <div>
-            <input type="file" name="avatar" onChange={handleFile} />
-            {errors.avatar && <p style={{ color: "red" }}>{errors.avatar}</p>}
-          </div>
-
-          <button type="submit">Register</button>
-        </form>
+        <input
+          placeholder="Name"
+          {...register("name", { required: "Vui lòng nhập tên" })}
+        />
+        <p style={{ color: "red" }}>{errors.name?.message}</p>
       </div>
-    </div>
+
+      <div>
+        <input
+          placeholder="Email"
+          {...register("email", {
+            required: "Vui lòng nhập email",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Email không hợp lệ",
+            },
+          })}
+        />
+        <p style={{ color: "red" }}>{errors.email?.message}</p>
+      </div>
+
+      <div>
+        <input
+          type="password"
+          placeholder="Password"
+          {...register("password", { required: "Vui lòng nhập mật khẩu" })}
+        />
+        <p style={{ color: "red" }}>{errors.password?.message}</p>
+      </div>
+
+      <div>
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          {...register("confirmPass", {
+            required: "Vui lòng xác nhận mật khẩu",
+            validate: (val) =>
+              val === watch("password") || "Mật khẩu xác nhận không khớp",
+          })}
+        />
+        <p style={{ color: "red" }}>{errors.confirmPass?.message}</p>
+      </div>
+
+      <div>
+        <input
+          type="number"
+          placeholder="Phone"
+          {...register("phone", { required: "Vui lòng nhập số điện thoại" })}
+        />
+        <p style={{ color: "red" }}>{errors.phone?.message}</p>
+      </div>
+
+      <div>
+        <input
+          placeholder="Address"
+          {...register("address", { required: "Vui lòng nhập địa chỉ" })}
+        />
+        <p style={{ color: "red" }}>{errors.address?.message}</p>
+      </div>
+
+      <div>
+        <input
+          type="file"
+          {...register("avatar", {
+            validate: validateAvatar,
+          })}
+        />
+        <p style={{ color: "red" }}>{errors.avatar?.message}</p>
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
   );
 };
+
 export default RegisterForm;

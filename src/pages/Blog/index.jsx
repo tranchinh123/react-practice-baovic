@@ -34,9 +34,16 @@ const BlogPage = () => {
                 <i className="fa fa-star-half-o"></i>
               </span>
             </div>
-            <Link to={`/blog/detail/${blog.id}`}>
+            {/* <Link to={`/blog/detail/${blog.id}`}>
               <img
                 src={`http://localhost:8080/web/laravel8/public/upload/blog/image/${blog.image}`}
+                alt={blog.title}
+              />
+            </Link> */}
+
+            <Link to={`/blog/detail/${blog.id}`}>
+              <img
+                src={`http://project.test/laravel8/laravel8/public/upload/blog/image/${blog.image}`}
                 alt={blog.title}
               />
             </Link>

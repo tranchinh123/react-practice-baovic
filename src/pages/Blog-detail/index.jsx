@@ -66,9 +66,16 @@ const BlogPageDetail = () => {
               </li>
             </ul>
           </div>
-          <a href=".">
+          {/* <a href=".">
             <img
               src={`http://localhost:8080/web/laravel8/public/upload/blog/image/${data.image}`}
+              alt=""
+            />
+          </a> */}
+
+          <a href=".">
+            <img
+              src={`http://project.test/laravel8/laravel8/public/upload/blog/image/${data.image}`}
               alt=""
             />
           </a>
