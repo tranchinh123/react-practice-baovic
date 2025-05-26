@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const MenuAcc = () => {
   return (
     <div className="col-sm-3">
@@ -7,32 +8,32 @@ const MenuAcc = () => {
           <div className="panel panel-default">
             <div className="panel-heading">
               <h4 className="panel-title">
-                <a
+                <Link
                   data-toggle="collapse"
                   data-parent="#accordian"
-                  href="#sportswear"
+                  to="/account/update"
                 >
                   <span className="badge pull-right">
                     <i className="fa fa-plus"></i>
                   </span>
                   Account
-                </a>
+                </Link>
               </h4>
             </div>
           </div>
           <div className="panel panel-default">
             <div className="panel-heading">
               <h4 className="panel-title">
-                <a
+                <Link
                   data-toggle="collapse"
                   data-parent="#accordian"
-                  href="#sportswear"
+                  to="/account/product/list"
                 >
                   <span className="badge pull-right">
                     <i className="fa fa-plus"></i>
                   </span>
                   MY PRODUCT
-                </a>
+                </Link>
               </h4>
             </div>
           </div>

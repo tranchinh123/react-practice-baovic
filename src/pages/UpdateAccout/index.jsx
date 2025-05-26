@@ -1,14 +1,25 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { post } from "../../service/api";
+import { API } from "../../constants/api";
 
 const UpdateAccountPage = () => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm();
+  const token = localStorage.getItem("token");
+  const auth = JSON.parse(localStorage.getItem("auth"));
+  const userID = auth.id;
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("auth");
@@ -51,29 +62,39 @@ const UpdateAccountPage = () => {
     });
 
   const onSubmit = async (data) => {
-    // try {
-    //   const file = data.avatar[0];
-    //   const base64Avatar = await toBase64(file);
+    try {
+      const file = data.avatar[0];
+      const base64Avatar = await toBase64(file);
 
-    //   const userData = {
-    //     name: data.name,
-    //     email: data.email,
-    //     password: data.password,
-    //     confirmPass: data.confirmPass,
-    //     phone: data.phone,
-    //     address: data.address,
-    //     level: 0,
-    //     avatar: base64Avatar,
-    //   };
+      const userData = {
+        name: data.name,
+        email: data.email,
+        password: data.password ? data.password : "",
+        phone: data.phone,
+        address: data.address,
+        avatar: base64Avatar,
+      };
 
-    //   await post("register", userData);
-    //   reset();
-    //   alert("Tạo tài khoản thành công!");
-    // } catch (error) {
-    //   console.error("Lỗi khi tạo tài khoản:", error);
-    //   alert("Đăng ký thất bại!");
-    // }
-    console.log(data);
+      const response = await post(
+        `${API.USERUPDATE_ENDPOINT}/${userID}`,
+        userData,
+        config
+      );
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("auth", JSON.stringify(response.Auth));
+      const userUpdate = JSON.parse(localStorage.getItem("auth"));
+      reset({
+        name: userUpdate.name || "",
+        email: userUpdate.email || "",
+        phone: userUpdate.phone || "",
+        address: userUpdate.address || "",
+        avatar: userUpdate.avatar || "",
+      });
+      alert("Update tài khoản thành công!");
+    } catch (error) {
+      console.error("Lỗi khi update tài khoản:", error);
+      alert("Cập nhập thất bại!");
+    }
   };
 
   return (
@@ -92,6 +113,7 @@ const UpdateAccountPage = () => {
         <div>
           <input
             placeholder="Email"
+            readOnly
             {...register("email", {
               required: "Vui lòng nhập email",
               pattern: {

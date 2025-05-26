@@ -127,7 +127,9 @@ const Header = () => {
                 <div className="shop-menu clearfix pull-right">
                   <ul className="nav navbar-nav">
                     <li>
-                      <Link to={isLoggedIn ? "/account" : "/login_register"}>
+                      <Link
+                        to={isLoggedIn ? "/account/update" : "/login_register"}
+                      >
                         <i className="fa fa-user"></i> Account
                       </Link>
                     </li>
