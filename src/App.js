@@ -6,6 +6,7 @@ import LoginRegisterPage from "./pages/Login-Register";
 import UpdateAccountPage from "./pages/UpdateAccout";
 import MyProductPage from "./pages/Product/MyListProduct";
 import AddProductPage from "./pages/Product/AddProduct";
+import EditProductPage from "./pages/Product/EditProduct";
 import DefaultLayout from "./layouts";
 
 function App() {
@@ -19,6 +20,10 @@ function App() {
           <Route path="/account/update" element={<UpdateAccountPage />} />
           <Route path="/account/product/list" element={<MyProductPage />} />
           <Route path="/account/product/add" element={<AddProductPage />} />
+          <Route
+            path="/account/product/edit/:id"
+            element={<EditProductPage />}
+          />
         </Route>
         <Route path="/login_register" element={<LoginRegisterPage />} />
       </Routes>

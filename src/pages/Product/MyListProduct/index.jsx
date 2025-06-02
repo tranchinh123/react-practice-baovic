@@ -36,7 +36,7 @@ const MyProductPage = () => {
   }, [fetchProduct]);
 
   const handleEdit = (id) => {
-    console.log("Edit", id);
+    navigate(`/account/product/edit/${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -74,7 +74,7 @@ const MyProductPage = () => {
 
               // Đường dẫn đầy đủ ảnh
               const imageUrl = firstImage
-                ? `http://project.test/laravel8/laravel8/public/upload/product/${userID}/${firstImage}`
+                ? `http://localhost:8080/web/laravel8/public/upload/product/${userID}/${firstImage}`
                 : "";
 
               return (
