@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { post } from "../../../service/api";
-
+import "../RegisterForm/index.css";
 const RegisterForm = () => {
   const {
     register,

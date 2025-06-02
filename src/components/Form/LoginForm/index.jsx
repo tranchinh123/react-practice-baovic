@@ -32,13 +32,14 @@ const LoginForm = () => {
   };
 
   const onSubmit = async (form) => {
-    const formData = new FormData();
-    formData.append("email", form.email);
-    formData.append("password", form.password);
-    formData.append("level", form.level);
+    const user = {
+      email: form.email,
+      password: form.password,
+      level: form.level,
+    };
 
     try {
-      const res = await post("login", formData);
+      const res = await post("login", user);
 
       if (!res.success) {
         // nếu API không báo lỗi HTTP nhưng trả về { success: false }

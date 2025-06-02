@@ -6,6 +6,10 @@ const API = {
   REGISTER_ENDPOINT: "register",
   COMMENT_ENDPOINT: "comment",
   USERUPDATE_ENDPOINT: "user/update",
+  CREATEPRODUCT_ENDPOINT: "user/product/add",
+  CATEGORYBRAND_ENDPOINT: "category-brand",
+  MYPRODUCT_ENDPOINT: "user/my-product",
+  DELELETPRODUCT_ENDPOINT: "user/product/delete",
 };
 
 // const API = {
@@ -16,6 +20,9 @@ const API = {
 //   REGISTER_ENDPOINT: "register",
 //   COMMENT_ENDPOINT: "comment",
 //   USERUPDATE_ENDPOINT: "user/update",
+// CREATEPRODUCT_ENDPOINT: "user/product/add",
+//   CATEGORYBRAND_ENDPOINT: "category-brand",
+//  MYPRODUCT_ENDPOINT: "user/my-product",
 // };
 
 // const BASE_URL = "http://localhost:8080/web/laravel8/public/api/";

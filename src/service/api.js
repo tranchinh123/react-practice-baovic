@@ -1,9 +1,9 @@
 import axios from "axios";
 import { API } from "../constants/api";
 
-const get = async (endPoint) => {
+const get = async (endPoint, config) => {
   try {
-    const response = await axios.get(`${API.BASE_URL}${endPoint}`);
+    const response = await axios.get(`${API.BASE_URL}${endPoint}`, config);
     return response.data;
   } catch (error) {
     // Nếu có response từ server (ví dụ lỗi 4xx, 5xx)
