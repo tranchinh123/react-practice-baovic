@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
-import { get } from "../../../service/api";
+import { get, post } from "../../../service/api";
 import { API } from "../../../constants/api";
 
 import "../EditProductForm/index.css";
@@ -13,7 +13,9 @@ const EditProductForm = () => {
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
   const userID = JSON.parse(localStorage.getItem("auth")).id;
+
   const {
     register,
     handleSubmit,
@@ -104,6 +106,21 @@ const EditProductForm = () => {
 
   const onSubmit = async (data) => {
     try {
+      // Tính ảnh còn giữ lại = ảnh cũ - ảnh bị đánh dấu xóa
+      const remainingOldImages = images.filter(
+        (img) => !deletedImages.includes(img)
+      );
+
+      // Ảnh mới upload
+      const newImages = data.images ? Array.from(data.images) : [];
+
+      const totalImages = remainingOldImages.length + newImages.length;
+
+      if (totalImages > 3) {
+        alert("Tổng số ảnh (cũ giữ lại + mới upload) không được vượt quá 3");
+        return;
+      }
+
       let formData = new FormData();
       formData.append("name", data.name);
       formData.append("price", data.price);
@@ -113,7 +130,28 @@ const EditProductForm = () => {
       formData.append("sale", data.percent || "");
       formData.append("company", data.company);
       formData.append("detail", data.detail);
-    } catch (err) {}
+
+      // Ảnh mới
+      newImages.forEach((file) => {
+        formData.append("file[]", file);
+      });
+
+      // Ảnh cần xóa
+      deletedImages.forEach((imgName) => {
+        formData.append("avatarCheckBox[]", imgName);
+      });
+
+      const response = await post(
+        `${API.UPDATEPRODUCT_ENDPOINT}/${product.id}`,
+        formData,
+        config
+      );
+      console.log(response);
+
+      console.log("FormData gửi đi:", [...formData.entries()]);
+    } catch (err) {
+      console.error("Lỗi khi cập nhật sản phẩm:", err);
+    }
   };
 
   return (
@@ -216,9 +254,22 @@ const EditProductForm = () => {
               {images.map((img, index) => (
                 <li key={index} className="old-image-item">
                   <label>
-                    <input type="checkbox" value={img} />
+                    <input
+                      type="checkbox"
+                      value={img}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (e.target.checked) {
+                          setDeletedImages((prev) => [...prev, value]);
+                        } else {
+                          setDeletedImages((prev) =>
+                            prev.filter((item) => item !== value)
+                          );
+                        }
+                      }}
+                    />
                     <img
-                      src={`http://localhost:8080/web/laravel8/public/upload/product/${userID}/${img}`}
+                      src={`http://project.test/laravel8/laravel8/public/upload/product/${userID}/${img}`}
                       alt={`Ảnh ${index}`}
                       style={{ width: "50px", marginLeft: "8px" }}
                     />

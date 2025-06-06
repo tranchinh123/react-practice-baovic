@@ -7,6 +7,7 @@ import { API } from "../../../constants/api";
 const MyProductPage = () => {
   const [products, setProducts] = useState([]);
   const userID = JSON.parse(localStorage.getItem("auth")).id;
+
   const token = localStorage.getItem("token");
   const config = useMemo(
     () => ({
@@ -17,6 +18,7 @@ const MyProductPage = () => {
     }),
     [token]
   );
+
   const navigate = useNavigate();
 
   const fetchProduct = useCallback(async () => {
