@@ -1,4 +1,4 @@
-import "../MyListProduct/index.css";
+import "./index.css";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { get } from "../../../service/api";

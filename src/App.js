@@ -4,9 +4,9 @@ import HomePage from "./pages/Home";
 import BlogPage from "./pages/Blog";
 import LoginRegisterPage from "./pages/Login-Register";
 import UpdateAccountPage from "./pages/UpdateAccout";
-import MyProductPage from "./pages/Product/MyListProduct";
-import AddProductPage from "./pages/Product/AddProduct";
-import EditProductPage from "./pages/Product/EditProduct";
+import MyProductPage from "./pages/MyProduct/MyListProduct";
+import AddProductPage from "./pages/MyProduct/AddProduct";
+import EditProductPage from "./pages/MyProduct/EditProduct";
 import DefaultLayout from "./layouts";
 
 function App() {
