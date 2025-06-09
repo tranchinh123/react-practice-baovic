@@ -7,6 +7,7 @@ import UpdateAccountPage from "./pages/UpdateAccout";
 import MyProductPage from "./pages/MyProduct/MyListProduct";
 import AddProductPage from "./pages/MyProduct/AddProduct";
 import EditProductPage from "./pages/MyProduct/EditProduct";
+import ProductDetailPage from "./pages/Product-detail";
 import DefaultLayout from "./layouts";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             path="/account/product/edit/:id"
             element={<EditProductPage />}
           />
+          <Route path="/product_detail/:id" element={<ProductDetailPage />} />
         </Route>
         <Route path="/login_register" element={<LoginRegisterPage />} />
       </Routes>

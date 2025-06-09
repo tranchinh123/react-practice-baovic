@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 import { get } from "../../service/api";
 
 const HomePage = () => {
@@ -28,7 +28,7 @@ const HomePage = () => {
 
           // Đường dẫn đầy đủ ảnh
           const imageUrl = firstImage
-            ? `http://localhost:8080/web/laravel8/public/upload/product/${product.id_user}/${firstImage}`
+            ? `http://project.test/laravel8/laravel8/public/upload/product/${product.id_user}/${firstImage}`
             : "";
 
           return (
@@ -39,22 +39,22 @@ const HomePage = () => {
                     <img src={imageUrl} alt="" />
                     <h2>{`$${product.price}`}</h2>
                     <p>{`${product.name}`}</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="choose">
                   <ul className="nav nav-pills nav-justified">
                     <li>
-                      <a href="#">
+                      <Link href="#">
                         <i className="fa fa-plus-square"></i>Add to wishlist
-                      </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="#">
+                      <Link to={`/product_detail/${product.id}`}>
                         <i className="fa fa-plus-square"></i>More
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -68,29 +68,29 @@ const HomePage = () => {
         <div className="col-sm-12">
           <ul className="nav nav-tabs">
             <li className="active">
-              <a href="#tshirt" data-toggle="tab">
+              <Link href="#tshirt" data-toggle="tab">
                 T-Shirt
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#blazers" data-toggle="tab">
+              <Link href="#blazers" data-toggle="tab">
                 Blazers
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#sunglass" data-toggle="tab">
+              <Link href="#sunglass" data-toggle="tab">
                 Sunglass
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#kids" data-toggle="tab">
+              <Link href="#kids" data-toggle="tab">
                 Kids
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#poloshirt" data-toggle="tab">
+              <Link href="#poloshirt" data-toggle="tab">
                 Polo shirt
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -103,9 +103,9 @@ const HomePage = () => {
                     <img src="images/home/gallery1.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -117,9 +117,9 @@ const HomePage = () => {
                     <img src="images/home/gallery2.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -131,9 +131,9 @@ const HomePage = () => {
                     <img src="images/home/gallery3.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -145,9 +145,9 @@ const HomePage = () => {
                     <img src="images/home/gallery4.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -162,9 +162,9 @@ const HomePage = () => {
                     <img src="images/home/gallery4.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -176,9 +176,9 @@ const HomePage = () => {
                     <img src="images/home/gallery3.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -190,9 +190,9 @@ const HomePage = () => {
                     <img src="images/home/gallery2.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -204,9 +204,9 @@ const HomePage = () => {
                     <img src="images/home/gallery1.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -221,9 +221,9 @@ const HomePage = () => {
                     <img src="images/home/gallery3.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -235,9 +235,9 @@ const HomePage = () => {
                     <img src="images/home/gallery4.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -249,9 +249,9 @@ const HomePage = () => {
                     <img src="images/home/gallery1.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -263,9 +263,9 @@ const HomePage = () => {
                     <img src="images/home/gallery2.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -280,9 +280,9 @@ const HomePage = () => {
                     <img src="images/home/gallery1.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -294,9 +294,9 @@ const HomePage = () => {
                     <img src="images/home/gallery2.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -308,9 +308,9 @@ const HomePage = () => {
                     <img src="images/home/gallery3.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -322,9 +322,9 @@ const HomePage = () => {
                     <img src="images/home/gallery4.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -339,9 +339,9 @@ const HomePage = () => {
                     <img src="images/home/gallery2.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -353,9 +353,9 @@ const HomePage = () => {
                     <img src="images/home/gallery4.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -367,9 +367,9 @@ const HomePage = () => {
                     <img src="images/home/gallery3.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -381,9 +381,9 @@ const HomePage = () => {
                     <img src="images/home/gallery1.jpg" alt="" />
                     <h2>$56</h2>
                     <p>Easy Polo Black Edition</p>
-                    <a href="#" className="btn btn-default add-to-cart">
+                    <Link href="#" className="btn btn-default add-to-cart">
                       <i className="fa fa-shopping-cart"></i>Add to cart
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -409,9 +409,9 @@ const HomePage = () => {
                       <img src="images/home/recommend1.jpg" alt="" />
                       <h2>$56</h2>
                       <p>Easy Polo Black Edition</p>
-                      <a href="#" className="btn btn-default add-to-cart">
+                      <Link href="#" className="btn btn-default add-to-cart">
                         <i className="fa fa-shopping-cart"></i>Add to cart
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -423,9 +423,9 @@ const HomePage = () => {
                       <img src="images/home/recommend2.jpg" alt="" />
                       <h2>$56</h2>
                       <p>Easy Polo Black Edition</p>
-                      <a href="#" className="btn btn-default add-to-cart">
+                      <Link href="#" className="btn btn-default add-to-cart">
                         <i className="fa fa-shopping-cart"></i>Add to cart
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -437,9 +437,9 @@ const HomePage = () => {
                       <img src="images/home/recommend3.jpg" alt="" />
                       <h2>$56</h2>
                       <p>Easy Polo Black Edition</p>
-                      <a href="#" className="btn btn-default add-to-cart">
+                      <Link href="#" className="btn btn-default add-to-cart">
                         <i className="fa fa-shopping-cart"></i>Add to cart
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -453,9 +453,9 @@ const HomePage = () => {
                       <img src="images/home/recommend1.jpg" alt="" />
                       <h2>$56</h2>
                       <p>Easy Polo Black Edition</p>
-                      <a href="#" className="btn btn-default add-to-cart">
+                      <Link href="#" className="btn btn-default add-to-cart">
                         <i className="fa fa-shopping-cart"></i>Add to cart
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -467,9 +467,9 @@ const HomePage = () => {
                       <img src="images/home/recommend2.jpg" alt="" />
                       <h2>$56</h2>
                       <p>Easy Polo Black Edition</p>
-                      <a href="#" className="btn btn-default add-to-cart">
+                      <Link href="#" className="btn btn-default add-to-cart">
                         <i className="fa fa-shopping-cart"></i>Add to cart
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -481,29 +481,29 @@ const HomePage = () => {
                       <img src="images/home/recommend3.jpg" alt="" />
                       <h2>$56</h2>
                       <p>Easy Polo Black Edition</p>
-                      <a href="#" className="btn btn-default add-to-cart">
+                      <Link href="#" className="btn btn-default add-to-cart">
                         <i className="fa fa-shopping-cart"></i>Add to cart
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <a
+          <Link
             className="left recommended-item-control"
             href="#recommended-item-carousel"
             data-slide="prev"
           >
             <i className="fa fa-angle-left"></i>
-          </a>
-          <a
+          </Link>
+          <Link
             className="right recommended-item-control"
             href="#recommended-item-carousel"
             data-slide="next"
           >
             <i className="fa fa-angle-right"></i>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
