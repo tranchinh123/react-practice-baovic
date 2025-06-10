@@ -8,6 +8,7 @@ import MyProductPage from "./pages/MyProduct/MyListProduct";
 import AddProductPage from "./pages/MyProduct/AddProduct";
 import EditProductPage from "./pages/MyProduct/EditProduct";
 import ProductDetailPage from "./pages/Product-detail";
+import CartPage from "./pages/Cart";
 import DefaultLayout from "./layouts";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/product_detail/:id" element={<ProductDetailPage />} />
         </Route>
         <Route path="/login_register" element={<LoginRegisterPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Routes>
     </Router>
   );

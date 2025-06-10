@@ -5,7 +5,25 @@ import { get } from "../../service/api";
 const HomePage = () => {
   const [products, setProducts] = useState([]);
 
+  const handleAddToCart = (id) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    if (cart[id]) {
+      cart[id] += 1;
+    } else {
+      cart[id] = 1;
+    }
+
+    // Lưu lại vào localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Sản phẩm đã được thêm vào giỏ hàng");
+  };
   useEffect(() => {
+    // Khởi tạo cart nếu chưa có
+    if (!localStorage.getItem("cart")) {
+      localStorage.setItem("cart", JSON.stringify({}));
+    }
+
     const fetchProducts = async () => {
       const response = await get(`product`);
       setProducts(response.data);
@@ -28,7 +46,7 @@ const HomePage = () => {
 
           // Đường dẫn đầy đủ ảnh
           const imageUrl = firstImage
-            ? `http://project.test/laravel8/laravel8/public/upload/product/${product.id_user}/${firstImage}`
+            ? `http://localhost:8080/web/laravel8/public/upload/product/${product.id_user}/${firstImage}`
             : "";
 
           return (
@@ -39,8 +57,13 @@ const HomePage = () => {
                     <img src={imageUrl} alt="" />
                     <h2>{`$${product.price}`}</h2>
                     <p>{`${product.name}`}</p>
-                    <Link href="#" className="btn btn-default add-to-cart">
-                      <i className="fa fa-shopping-cart"></i>Add to cart
+                    <Link
+                      onClick={() => handleAddToCart(product.id)}
+                      href="#"
+                      className="btn btn-default add-to-cart"
+                    >
+                      <i className="fa fa-shopping-cart"></i>
+                      Add to cart
                     </Link>
                   </div>
                 </div>

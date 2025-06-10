@@ -145,9 +145,9 @@ const Header = () => {
                       </a>
                     </li>
                     <li>
-                      <a href="cart.html">
+                      <Link to="/cart">
                         <i className="fa fa-shopping-cart"></i> Cart
-                      </a>
+                      </Link>
                     </li>
                     {!isLoggedIn ? (
                       <li>

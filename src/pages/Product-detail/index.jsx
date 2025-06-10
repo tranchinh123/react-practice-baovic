@@ -7,6 +7,20 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const imageList = product.image ? JSON.parse(product.image) : [];
   const [mainImage, setMainImage] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = (id) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+    if (cart[id]) {
+      cart[id] += quantity;
+    } else {
+      cart[id] = quantity;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Đã thêm sản phẩm vào giỏ hàng!");
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -35,7 +49,7 @@ const ProductDetailPage = () => {
         <div className="col-sm-5">
           <div className="view-product">
             <img
-              src={`http://project.test/laravel8/laravel8/public/upload/product/${product.id_user}/${mainImage}`}
+              src={`http://localhost:8080/web/laravel8/public/upload/product/${product.id_user}/${mainImage}`}
               alt=""
             />
             <Link href="images/product-details/1.jpg" rel="prettyPhoto">
@@ -53,7 +67,7 @@ const ProductDetailPage = () => {
                 {imageList.map((img, index) => (
                   <Link key={index}>
                     <img
-                      src={`http://project.test/laravel8/laravel8/public/upload/product/${product.id_user}/${img}`}
+                      src={`http://localhost:8080/web/laravel8/public/upload/product/${product.id_user}/${img}`}
                       alt={`${index + 1}`}
                       onClick={() => setMainImage(img)}
                       style={{
@@ -97,8 +111,16 @@ const ProductDetailPage = () => {
             <span>
               <span>{`US $${product.price}`}</span>
               <label>Quantity:</label>
-              <input type="number" defaultValue={1} />
-              <button type="button" className="btn btn-fefault cart">
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+              />
+              <button
+                onClick={() => handleAddToCart(product.id)}
+                type="button"
+                className="btn btn-fefault cart"
+              >
                 <i className="fa fa-shopping-cart"></i>
                 Add to cart
               </button>
