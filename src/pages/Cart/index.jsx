@@ -2,9 +2,47 @@ import { useState, useEffect } from "react";
 import { post } from "../../service/api";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
-  const [products, setProducts] = useState("");
+  const [products, setProducts] = useState([]);
+  const subtotal = products.reduce(
+    (acc, product) => acc + product.price * product.qty,
+    0
+  );
+  console.log(products);
+
+  const handleQuantityUp = (id) => {
+    const updatedProducts = products.map((product) =>
+      product.id === id ? { ...product, qty: product.qty + 1 } : product
+    );
+    setProducts(updatedProducts);
+    updateLocalStorage(updatedProducts);
+  };
+
+  const handleQuantityDown = (id) => {
+    const updatedProducts = products.map((product) =>
+      product.id === id && product.qty > 1
+        ? { ...product, qty: product.qty - 1 }
+        : product
+    );
+    setProducts(updatedProducts);
+    updateLocalStorage(updatedProducts);
+  };
+
+  const handleDeleteProduct = (id) => {
+    const updatedProducts = products.filter((product) => product.id !== id);
+    setProducts(updatedProducts);
+    updateLocalStorage(updatedProducts);
+  };
+
+  const updateLocalStorage = (updatedProducts) => {
+    const cartObject = {};
+    updatedProducts.forEach((item) => {
+      cartObject[item.id] = item.qty;
+    });
+    localStorage.setItem("cart", JSON.stringify(cartObject));
+  };
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -28,7 +66,7 @@ const CartPage = () => {
           <div className="breadcrumbs">
             <ol className="breadcrumb">
               <li>
-                <a href="#">Home</a>
+                <Link to="/">Home</Link>
               </li>
               <li className="active">Shopping Cart</li>
             </ol>
@@ -48,52 +86,80 @@ const CartPage = () => {
               </thead>
 
               <tbody>
-                {products.map((product) => (
-                  <tr key={product.id}>
-                    <td className="cart_product">
-                      <a href="">
-                        <img src="images/cart/one.png" alt="" />
-                      </a>
-                    </td>
-                    <td className="cart_description">
-                      <h4>
-                        <a href="">{product.name}</a>
-                      </h4>
-                      <p>Web ID: 1089772</p>
-                    </td>
-                    <td className="cart_price">
-                      <p>{`$${product.price}`}</p>
-                    </td>
-                    <td className="cart_quantity">
-                      <div className="cart_quantity_button">
-                        <a className="cart_quantity_up" href="">
-                          {" "}
-                          +{" "}
-                        </a>
-                        <input
-                          className="cart_quantity_input"
-                          type="text"
-                          name="quantity"
-                          value={product.qty}
-                          autocomplete="off"
-                          size="2"
+                {products.map((product) => {
+                  let firstImage = "";
+                  try {
+                    const images = JSON.parse(product.image);
+                    firstImage = images.length > 0 ? images[0] : "";
+                  } catch {
+                    firstImage = "";
+                  }
+
+                  const imageUrl = firstImage
+                    ? `http://project.test/laravel8/laravel8/public/upload/product/${product.id_user}/${firstImage}`
+                    : "";
+
+                  return (
+                    <tr key={product.id}>
+                      <td className="cart_product">
+                        <img
+                          src={imageUrl}
+                          alt=""
+                          style={{ width: "110px", height: "110px" }}
                         />
-                        <a className="cart_quantity_down" href="">
-                          {" "}
-                          -{" "}
-                        </a>
-                      </div>
-                    </td>
-                    <td className="cart_total">
-                      <p className="cart_total_price">$59</p>
-                    </td>
-                    <td className="cart_delete">
-                      <a className="cart_quantity_delete" href="">
-                        <i className="fa fa-times"></i>
-                      </a>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="cart_description">
+                        <h4>
+                          <p>{product.name}</p>
+                        </h4>
+                        <p>Web ID: 1089772</p>
+                      </td>
+                      <td className="cart_price">
+                        <p>{`$${product.price}`}</p>
+                      </td>
+                      <td className="cart_quantity">
+                        <div
+                          className="cart_quantity_button"
+                          style={{ display: "flex" }}
+                        >
+                          <button
+                            className="cart_quantity_up"
+                            onClick={() => handleQuantityUp(product.id)}
+                          >
+                            +
+                          </button>
+                          <input
+                            className="cart_quantity_input"
+                            type="text"
+                            name="quantity"
+                            value={product.qty}
+                            size="2"
+                            readOnly
+                          />
+                          <button
+                            className="cart_quantity_down"
+                            onClick={() => handleQuantityDown(product.id)}
+                          >
+                            -
+                          </button>
+                        </div>
+                      </td>
+                      <td className="cart_total">
+                        <p className="cart_total_price">
+                          {`$${product.price * product.qty}`}
+                        </p>
+                      </td>
+                      <td className="cart_delete">
+                        <button
+                          className="cart_quantity_delete"
+                          onClick={() => handleDeleteProduct(product.id)}
+                        >
+                          <i className="fa fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -135,7 +201,6 @@ const CartPage = () => {
                       <option>UK</option>
                       <option>India</option>
                       <option>Pakistan</option>
-                      <option>Ucrane</option>
                       <option>Canada</option>
                       <option>Dubai</option>
                     </select>
@@ -146,7 +211,6 @@ const CartPage = () => {
                       <option>Select</option>
                       <option>Dhaka</option>
                       <option>London</option>
-                      <option>Dillih</option>
                       <option>Lahore</option>
                       <option>Alaska</option>
                       <option>Canada</option>
@@ -158,19 +222,15 @@ const CartPage = () => {
                     <input type="text" />
                   </li>
                 </ul>
-                <a className="btn btn-default update" href="">
-                  Get Quotes
-                </a>
-                <a className="btn btn-default check_out" href="">
-                  Continue
-                </a>
+                <button className="btn btn-default update">Get Quotes</button>
+                <button className="btn btn-default check_out">Continue</button>
               </div>
             </div>
             <div className="col-sm-6">
               <div className="total_area">
                 <ul>
                   <li>
-                    Cart Sub Total <span>$59</span>
+                    Cart Sub Total <span>{subtotal}</span>
                   </li>
                   <li>
                     Eco Tax <span>$2</span>
@@ -179,15 +239,11 @@ const CartPage = () => {
                     Shipping Cost <span>Free</span>
                   </li>
                   <li>
-                    Total <span>$61</span>
+                    Total <span>{`$${subtotal + 2}`}</span>
                   </li>
                 </ul>
-                <a className="btn btn-default update" href="">
-                  Update
-                </a>
-                <a className="btn btn-default check_out" href="">
-                  Check Out
-                </a>
+                <button className="btn btn-default update">Update</button>
+                <button className="btn btn-default check_out">Check Out</button>
               </div>
             </div>
           </div>

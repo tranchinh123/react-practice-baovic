@@ -46,7 +46,7 @@ const HomePage = () => {
 
           // Đường dẫn đầy đủ ảnh
           const imageUrl = firstImage
-            ? `http://localhost:8080/web/laravel8/public/upload/product/${product.id_user}/${firstImage}`
+            ? `http://project.test/laravel8/laravel8/public/upload/product/${product.id_user}/${firstImage}`
             : "";
 
           return (
