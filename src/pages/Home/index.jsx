@@ -18,6 +18,7 @@ const HomePage = () => {
     localStorage.setItem("cart", JSON.stringify(cart));
     alert("Sản phẩm đã được thêm vào giỏ hàng");
   };
+
   useEffect(() => {
     // Khởi tạo cart nếu chưa có
     if (!localStorage.getItem("cart")) {

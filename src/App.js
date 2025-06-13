@@ -11,26 +11,30 @@ import ProductDetailPage from "./pages/Product-detail";
 import CartPage from "./pages/Cart";
 import DefaultLayout from "./layouts";
 
+import { CartProvider } from "./context/CartContext";
+
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route element={<DefaultLayout />}>
-          <Route index path="/" element={<HomePage />} />
-          <Route path="/blog/detail/:id" element={<BlogPageDetail />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/account/update" element={<UpdateAccountPage />} />
-          <Route path="/account/product/list" element={<MyProductPage />} />
-          <Route path="/account/product/add" element={<AddProductPage />} />
-          <Route
-            path="/account/product/edit/:id"
-            element={<EditProductPage />}
-          />
-          <Route path="/product_detail/:id" element={<ProductDetailPage />} />
-        </Route>
-        <Route path="/login_register" element={<LoginRegisterPage />} />
-        <Route path="/cart" element={<CartPage />} />
-      </Routes>
+      <CartProvider>
+        <Routes>
+          <Route element={<DefaultLayout />}>
+            <Route index path="/" element={<HomePage />} />
+            <Route path="/blog/detail/:id" element={<BlogPageDetail />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/account/update" element={<UpdateAccountPage />} />
+            <Route path="/account/product/list" element={<MyProductPage />} />
+            <Route path="/account/product/add" element={<AddProductPage />} />
+            <Route
+              path="/account/product/edit/:id"
+              element={<EditProductPage />}
+            />
+            <Route path="/product_detail/:id" element={<ProductDetailPage />} />
+          </Route>
+          <Route path="/login_register" element={<LoginRegisterPage />} />
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </CartProvider>
     </Router>
   );
 }

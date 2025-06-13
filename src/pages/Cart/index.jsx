@@ -10,7 +10,6 @@ const CartPage = () => {
     (acc, product) => acc + product.price * product.qty,
     0
   );
-  console.log(products);
 
   const handleQuantityUp = (id) => {
     const updatedProducts = products.map((product) =>

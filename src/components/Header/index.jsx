@@ -1,9 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
+
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  const quantity = useContext(CartContext);
+  console.log(quantity);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
