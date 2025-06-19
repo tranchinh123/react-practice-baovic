@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 import { post } from "../../service/api";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -10,6 +11,7 @@ const CartPage = () => {
     (acc, product) => acc + product.price * product.qty,
     0
   );
+  const { removeToCart } = useContext(CartContext);
 
   const handleQuantityUp = (id) => {
     const updatedProducts = products.map((product) =>
@@ -32,7 +34,7 @@ const CartPage = () => {
   const handleDeleteProduct = (id) => {
     const updatedProducts = products.filter((product) => product.id !== id);
     setProducts(updatedProducts);
-    updateLocalStorage(updatedProducts);
+    removeToCart(id);
   };
 
   const updateLocalStorage = (updatedProducts) => {

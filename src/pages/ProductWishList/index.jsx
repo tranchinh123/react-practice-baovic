@@ -1,34 +1,37 @@
-import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { get } from "../../service/api";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import { useDispatch } from "react-redux";
-import { addToWishList } from "../../features/wishlistSlice";
-
-const HomePage = () => {
+import { useSelector, useDispatch } from "react-redux";
+import { deleteWishList } from "../../features/wishlistSlice";
+const ProductWishListPage = () => {
   const [products, setProducts] = useState([]);
-
   const { addToCart } = useContext(CartContext);
-
+  const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
 
   const handleAddToCart = (id) => {
     addToCart(id);
-    alert("Sản phẩm đã được thêm vào giỏ hàng");
+    alert("Sản phảm được thêm vào giỏ hàng");
   };
 
   useEffect(() => {
-    // Khởi tạo cart nếu chưa có
-    if (!localStorage.getItem("cart")) {
-      localStorage.setItem("cart", JSON.stringify({}));
-    }
-
-    const fetchProducts = async () => {
-      const response = await get(`product`);
-      setProducts(response.data);
+    const fetchProduct = async () => {
+      try {
+        const response = await get("product/wishlist");
+        const allProducts = response.data;
+        const filteredProducts = allProducts.filter((product) =>
+          wishlist.includes(product.id)
+        );
+        setProducts(filteredProducts);
+      } catch (error) {
+        console.error("Something went wrong", error);
+      }
     };
-    fetchProducts();
-  }, []);
+
+    fetchProduct();
+  }, [wishlist]);
 
   return (
     <div className="col-sm-9 padding-right">
@@ -71,9 +74,9 @@ const HomePage = () => {
                     <li>
                       <Link
                         href="#"
-                        onClick={() => dispatch(addToWishList(product.id))}
+                        onClick={() => dispatch(deleteWishList(product.id))}
                       >
-                        <i className="fa fa-plus-square"></i>Add to wishlist
+                        <i className="fa fa-plus-square"></i>Remove to wishlist
                       </Link>
                     </li>
                     <li>
@@ -534,4 +537,4 @@ const HomePage = () => {
     </div>
   );
 };
-export default HomePage;
+export default ProductWishListPage;

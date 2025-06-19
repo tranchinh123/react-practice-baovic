@@ -9,6 +9,7 @@ import AddProductPage from "./pages/MyProduct/AddProduct";
 import EditProductPage from "./pages/MyProduct/EditProduct";
 import ProductDetailPage from "./pages/Product-detail";
 import CartPage from "./pages/Cart";
+import ProductWishListPage from "./pages/ProductWishList";
 import DefaultLayout from "./layouts";
 
 import { CartProvider } from "./context/CartContext";
@@ -30,6 +31,7 @@ function App() {
               element={<EditProductPage />}
             />
             <Route path="/product_detail/:id" element={<ProductDetailPage />} />
+            <Route path="/productwishlist" element={<ProductWishListPage />} />
           </Route>
           <Route path="/login_register" element={<LoginRegisterPage />} />
           <Route path="/cart" element={<CartPage />} />

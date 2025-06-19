@@ -1,15 +1,14 @@
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-
-import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  const quantity = useContext(CartContext);
-  console.log(quantity);
+  const { getTotalUniqueItems } = useContext(CartContext);
+  const wishlist = useSelector((state) => state.wishlist);
+  const count = wishlist.length;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -141,9 +140,10 @@ const Header = () => {
                     </li>
 
                     <li>
-                      <a href=".">
-                        <i className="fa fa-star"></i> Wishlist
-                      </a>
+                      <Link to="/productwishlist">
+                        <i className="fa fa-star"></i> Wishlist{" "}
+                        <span style={{ color: "red" }}>({count})</span>
+                      </Link>
                     </li>
                     <li>
                       <a href="checkout.html">
@@ -152,7 +152,10 @@ const Header = () => {
                     </li>
                     <li>
                       <Link to="/cart">
-                        <i className="fa fa-shopping-cart"></i> Cart
+                        <i className="fa fa-shopping-cart"></i> Cart{" "}
+                        <span style={{ color: "red" }}>
+                          ({getTotalUniqueItems()})
+                        </span>
                       </Link>
                     </li>
                     {!isLoggedIn ? (
